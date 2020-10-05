@@ -1,6 +1,6 @@
 // Import MaterialApp and other widgets which we can use to quickly create a material app
-import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Code written in Dart starts exectuting from the main function. runApp is part of
 // Flutter, and requires the component which will be our app's container. In Flutter,
@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 void main() => runApp(new TodoApp());
 
 class _strikeThrough extends StatelessWidget{
-
   bool todoToggle;
   String todoText;
   _strikeThrough({this.todoToggle, this.todoText}) : super();
@@ -17,8 +16,8 @@ class _strikeThrough extends StatelessWidget{
     if(todoToggle==false){
       return Text(
           todoText,
-          style: TextStyle(
-            fontSize: 22.0
+          style:  TextStyle(
+            fontSize: 22.0,
           ),
       );
     }
@@ -28,8 +27,7 @@ class _strikeThrough extends StatelessWidget{
           style: TextStyle(
             fontSize: 22.0,
             decoration: TextDecoration.lineThrough,
-            color: Colors.redAccent,
-            fontStyle: FontStyle.italic
+            color: Colors.blueGrey[200]
           ),
         );
     }
@@ -138,6 +136,7 @@ class TodoListState extends State<TodoList> {
         });
       },
       key: Key(_todoItems[i]),
+      activeColor: Colors.teal,
       title: _strikeThrough(todoText: _todoItems[i], todoToggle: _todoItemsChecked[i]),
     );
   }
@@ -146,7 +145,11 @@ class TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Todo')
+        title: Center(
+          child: Text('Todo',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 24.0)
+          ))
       ),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
