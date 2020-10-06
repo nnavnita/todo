@@ -1,6 +1,6 @@
 // Import MaterialApp and other widgets which we can use to quickly create a material app
-import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Code written in Dart starts exectuting from the main function. runApp is part of
 // Flutter, and requires the component which will be our app's container. In Flutter,
@@ -8,30 +8,38 @@ import 'package:flutter/material.dart';
 void main() => runApp(new TodoApp());
 
 class _strikeThrough extends StatelessWidget{
-
   bool todoToggle;
   String todoText;
   _strikeThrough({this.todoToggle, this.todoText}) : super();
 
   Widget _strikewidget(){
     if(todoToggle==false){
-      return Text(
+      return Padding(
+        padding: EdgeInsets.only(left: 15.0),
+        child: Text(
           todoText,
-          style: TextStyle(
-            fontSize: 22.0
-          ),
+          style: GoogleFonts.lato(
+            textStyle: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w400
+          )
+        ))
       );
     }
     else{
-      return Text(
+      return Padding(
+        padding: EdgeInsets.only(left: 15.0),
+        child: Text(
           todoText,
-          style: TextStyle(
-            fontSize: 22.0,
+          style: GoogleFonts.lato(
+            textStyle: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.w400,
             decoration: TextDecoration.lineThrough,
-            color: Colors.redAccent,
-            fontStyle: FontStyle.italic
-          ),
-        );
+            color: Colors.blueGrey[200]
+          ))
+        )
+      );
     }
   }
 
@@ -125,20 +133,28 @@ class TodoListState extends State<TodoList> {
 
   // Build a single todo item
   Widget _buildTodoItem(int i) {
-    return CheckboxListTile(
-      value: _todoItemsChecked[i],
-      onChanged: (bool){
-        setState(() {
-          if(!bool){
-            _todoItemsChecked[i] = false;
-          }
-          else{
-            _todoItemsChecked[i] = true;
-          }
-        });
-      },
+    return Card(
+      child: ListTile(
+        onTap: (){
+          setState(() {
+            if(!_todoItemsChecked[i]){
+              _todoItemsChecked[i] = true;
+            }
+            else{
+              _todoItemsChecked[i] = false;
+            }
+          });
+        },
+        trailing: _todoItemsChecked[i] ? Card(shadowColor: Colors.grey[50], color: Colors.greenAccent, child: Padding(padding: EdgeInsets.all(5.0), child: Icon(Icons.done, color: Colors.white, size: 20.0)), elevation:2, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))) : Card(shadowColor: Colors.grey[50], child:  Padding(padding: EdgeInsets.all(5.0), child: Icon(Icons.fiber_manual_record, color: Colors.white, size: 20.0)), elevation:2, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+        title: _strikeThrough(todoText: _todoItems[i], todoToggle: _todoItemsChecked[i]),
+      ),
       key: Key(_todoItems[i]),
-      title: _strikeThrough(todoText: _todoItems[i], todoToggle: _todoItemsChecked[i]),
+      elevation: 5,
+      margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50.0),
+      ),
+      shadowColor: Colors.grey[50],
     );
   }
 
@@ -146,13 +162,23 @@ class TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Todo')
+        title: Text('Todo',
+            style: GoogleFonts.lato(
+              textStyle: TextStyle(fontSize: 30.0,
+              letterSpacing: .5,
+              fontWeight: FontWeight.w300,
+              color: Colors.black.withOpacity(0.8))),
+          ),
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          elevation: 0
       ),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
         onPressed: _pushAddTodoScreen,
         tooltip: 'Add task',
-        child: new Icon(Icons.add)
+        child: new Icon(Icons.add, size: 30.0),
+        backgroundColor: Colors.blue[300],
       ),
     );
   }
