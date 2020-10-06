@@ -160,7 +160,8 @@ class TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    var _controller = TextEditingController();
+    var scaffold = new Scaffold(
       appBar: new AppBar(
         title: Text('Todo',
             style: GoogleFonts.lato(
@@ -173,41 +174,46 @@ class TodoListState extends State<TodoList> {
           centerTitle: true,
           elevation: 0
       ),
-      body: _buildTodoList(),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _pushAddTodoScreen,
-        tooltip: 'Add task',
-        child: new Icon(Icons.add, size: 30.0),
-        backgroundColor: Colors.blue[300],
-      ),
-    );
-  }
-
-  void _pushAddTodoScreen() {
-    // Push this page onto the stack
-    Navigator.of(context).push(
-      // MaterialPageRoute will automatically animate the screen entry, as well as adding
-      // a back button to close it
-      new MaterialPageRoute(
-        builder: (context) {
-          return new Scaffold(
-            appBar: new AppBar(
-              title: new Text('Add a new task')
-            ),
-            body: new TextField(
-              autofocus: true,
-              onSubmitted: (val) {
-                _addTodoItem(val);
-                Navigator.pop(context); // Close the add todo screen
-              },
-              decoration: new InputDecoration(
-                hintText: 'Enter something to do...',
-                contentPadding: const EdgeInsets.all(16.0)
+      body: new ListView(
+        children: <Widget>[
+          Container(
+            child: Card(child: TextField(
+              controller: _controller,
+              onSubmitted: (String value) => _addTodoItem(value),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                suffixIcon: IconButton(
+                  onPressed: () => {_addTodoItem(_controller.text)},
+                  icon: Icon(Icons.add),
+                  color: Colors.grey,
+                  iconSize: 25,
+                  padding: EdgeInsets.only(right: 20.0),
+                ),
+                hintText: 'Add task',
+                contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
               ),
-            )
-          );
-        }
+              style: GoogleFonts.lato(
+                textStyle: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w400
+              )), 
+              ),
+              elevation: 0,
+              margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0),
+              ),
+              color: Colors.blueGrey[50]),
+              padding: EdgeInsets.only(bottom: 20),
+
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[300])))
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height,
+            child: _buildTodoList())
+        ],
       )
     );
+    return scaffold;
   }
 }
