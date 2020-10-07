@@ -74,7 +74,7 @@ class TodoListState extends State<TodoList> {
     if(task.length > 0) {
       // Putting our code inside "setState" tells the app that our state has changed, and
       // it will automatically re-render the list
-      setState(() => {_todoItems.add(task), _todoItemsChecked.add(false)});
+      setState(() => {_todoItems.insert(0, task), _todoItemsChecked.insert(0, false)});
     }
   }
 
