@@ -261,7 +261,6 @@ class TodoListState extends State<TodoList> {
     }
   }
 
-  /*
   void _removeTodoItem(int index) {
     setState(() => {_todoItems.removeAt(index), _todoItemsChecked.removeAt(index)});
   }
@@ -291,7 +290,6 @@ class TodoListState extends State<TodoList> {
       }
     );
   }
-  */
 
   // Build the whole list of todo items
   Widget _buildTodoList() {
@@ -331,7 +329,7 @@ class TodoListState extends State<TodoList> {
             icon: new Icon(Icons.delete),
             onPressed: () {},
             color: Colors.red),
-          onPress: () {},
+            onPress: () => _promptRemoveTodoItem(i),
           backgroundColor: Colors.white)
       ],
       child: Container(child: Card(
