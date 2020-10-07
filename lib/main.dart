@@ -183,7 +183,7 @@ class TodoListState extends State<TodoList> {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 suffixIcon: IconButton(
-                  onPressed: () => {_addTodoItem(_controller.text)},
+                  onPressed: () => {FocusScope.of(context).unfocus(), _addTodoItem(_controller.text)},
                   icon: Icon(Icons.add),
                   color: Colors.grey,
                   iconSize: 25,
