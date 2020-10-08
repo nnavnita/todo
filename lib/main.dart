@@ -319,10 +319,17 @@ class TodoListState extends State<TodoList> {
       items: <ActionItems>[ 
         ActionItems(
           icon: new IconButton(
-            icon: new Icon(Icons.bookmark),
+            icon: new Icon(Icons.edit),
             onPressed: () {},
-            color: Colors.blue),
+            color: Colors.green),
           onPress: () {},
+          backgroundColor: Colors.white),
+        ActionItems(
+          icon: new IconButton(
+            icon: new Icon(Icons.star),
+            onPressed: () {},
+            color: Colors.yellow),
+          onPress: () => {},
           backgroundColor: Colors.white),
         ActionItems(
           icon: new IconButton( 
