@@ -427,7 +427,7 @@ class TodoListState extends State<TodoList> {
                 fontWeight: FontWeight.w600,
             ))),
             color: Colors.white,
-            padding: EdgeInsets.only(top: 10, left: 20)),
+            padding: EdgeInsets.only(top: 20, left: 20)),
           Container(
             height: MediaQuery.of(context).size.height/3.5,
             child: _buildTodoList(false)),
@@ -439,7 +439,7 @@ class TodoListState extends State<TodoList> {
                 fontWeight: FontWeight.w600,
             ))),
             color: Colors.white,
-            padding: EdgeInsets.only(top: 10, left: 20)),
+            padding: EdgeInsets.only(top: 20, left: 20)),
           Container(
             height: MediaQuery.of(context).size.height/4,
             child: _buildTodoList(true)),
