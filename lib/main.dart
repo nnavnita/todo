@@ -271,6 +271,7 @@ class TodoListState extends State<TodoList> {
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
+          actionsPadding: EdgeInsets.only(right: 20, bottom: 10),
           title: new Text('Delete "${_todoItems[index]}"?'),
           actions: <Widget>[
             new FlatButton(
@@ -280,24 +281,29 @@ class TodoListState extends State<TodoList> {
               onPressed: () => Navigator.of(context).pop()
             ),
             new FlatButton(
-              child: new Text('DELETE', style: TextStyle(color: Colors.red)),
+              child: new Text('DELETE'),
+              color: Colors.red,
               onPressed: () {
                 _removeTodoItem(index);
                 Navigator.of(context).pop();
-              }
+              },
             )
-          ]
+          ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))
+          )
         );
       }
     );
   }
 
   // Build the whole list of todo items
-  Widget _buildTodoList() {
+  Widget _buildTodoList(bool checked) {
     return ReorderableListView(
       children: <Widget>[
         for(var i = 0; i < _todoItems.length; i++)
-           _buildTodoItem(i)
+          if(_todoItemsChecked[i] == checked)
+            _buildTodoItem(i, checked)
       ],
       onReorder:  (OldIndex, NewIndex) {
         setState(() {
@@ -314,7 +320,7 @@ class TodoListState extends State<TodoList> {
   }
 
   // Build a single todo item
-  Widget _buildTodoItem(int i) {
+  Widget _buildTodoItem(int i, bool checked) {
     return OnSlide(
       key: Key(_todoItems[i]),
       items: <ActionItems>[ 
@@ -415,8 +421,29 @@ class TodoListState extends State<TodoList> {
             decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[300])))
           ),
           Container(
-            height: MediaQuery.of(context).size.height,
-            child: _buildTodoList())
+            child: Text('TO DO',
+            style: GoogleFonts.lato(
+              textStyle: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w600,
+            ))),
+            color: Colors.white,
+            padding: EdgeInsets.only(top: 20, left: 20)),
+          Container(
+            height: MediaQuery.of(context).size.height/3.5,
+            child: _buildTodoList(false)),
+          Container(
+            child: Text('DONE',
+            style: GoogleFonts.lato(
+              textStyle: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w600,
+            ))),
+            color: Colors.white,
+            padding: EdgeInsets.only(top: 20, left: 20)),
+          Container(
+            height: MediaQuery.of(context).size.height/4,
+            child: _buildTodoList(true)),
         ],
       )
     );
