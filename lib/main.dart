@@ -237,6 +237,7 @@ class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Todo',
       home: new TodoList()
     );
@@ -270,7 +271,7 @@ class TodoListState extends State<TodoList> {
       context: context,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text('Mark "${_todoItems[index]}" as done?'),
+          title: new Text('Delete "${_todoItems[index]}"?'),
           actions: <Widget>[
             new FlatButton(
               child: new Text('CANCEL'),
@@ -279,7 +280,7 @@ class TodoListState extends State<TodoList> {
               onPressed: () => Navigator.of(context).pop()
             ),
             new FlatButton(
-              child: new Text('MARK AS DONE'),
+              child: new Text('DELETE', style: TextStyle(color: Colors.red)),
               onPressed: () {
                 _removeTodoItem(index);
                 Navigator.of(context).pop();
